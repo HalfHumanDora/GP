@@ -21,11 +21,7 @@ class GPregression(object):
     def predict(self, x):
         k = self.kernel(x, self.X)
         c = np.diag(self.kernel(x, x)) + (1/self.beta)
-        # import IPython
-        # IPython.embed()
-        # mu = np.sum(k.dot(self.C_inv*self.Y), axis=1)
         mu = k.T.dot(self.C_inv.dot(self.Y))
         var = c - k.T.dot(self.C_inv.dot(k))
         var = np.diag(var)
-
         return mu, var
