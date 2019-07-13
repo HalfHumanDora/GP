@@ -1,8 +1,9 @@
 import numpy as np
+from scipy import linalg
 
 class GPRegression(object):
 
-    def __init__(self, kernel):
+    def __init__(self, kernel, beta):
         self.kernel = kernel
         self.beta = beta
 
@@ -12,8 +13,10 @@ class GPRegression(object):
         self.X = x
         self.Y = y
 
-        C = self.kernel(x, x)
+        self.K = self.kernel(x, x)
+        C = self.K + (1/self.beta)*np.eye(len(x))
 
+        self.C_inv = linalg.inv(C)
 
     def predict(self, x):
         k = self.kernel(x, self.X)

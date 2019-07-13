@@ -7,7 +7,7 @@ class Kernel(object):
     def __call__(self, x1, x2):
         raise NotImplementedError()
 
-class LinearKernel(Kernel):
+class Linear(Kernel):
 
     def __call__(self, x1, x2):
         return x1*x2
