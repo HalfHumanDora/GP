@@ -16,6 +16,7 @@ class GP_Regressor(object):
         self.train_y = y
 
     def predict(self, x):
+        # x is one data
 
         k_star = [self.kernel(x, [train_x])[0] for train_x in self.train_X]
         k_star = np.asarray(k_star)
@@ -28,6 +29,16 @@ class GP_Regressor(object):
 
 
 
+    def predict_batch(self, X):
+        # X is batch data
+
+        N = len(self.train_X)
+        M = len(X)
+        k_star = self.kernel(self.train_X, X)
+        k_star_star = self.kernel(X)
+
+
+
 
 if __name__ == "__main__":
     X = np.array([[0.2], [0.4], [0.6]])
@@ -37,5 +48,5 @@ if __name__ == "__main__":
     gp = GP_Regressor(kernel=kernel)
     gp.fit(X, y)
 
-    mean, std = gp.predict([0.5])
+    mean, std = gp.predict_batch([[0.5], [0.1]])
     print("prediction mean:{} std:{}".format(mean, std))
