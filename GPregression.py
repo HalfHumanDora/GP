@@ -1,7 +1,7 @@
 import numpy as np
 from scipy import linalg
 
-class GPRegression(object):
+class GPregression(object):
 
     def __init__(self, kernel, beta):
         self.kernel = kernel
@@ -20,9 +20,12 @@ class GPRegression(object):
 
     def predict(self, x):
         k = self.kernel(x, self.X)
-        c = self.Kernel(x, x) + (1/self.beta)
-
-        mu = k*self.C_inv*self.Y
-        var = c - k*self.C_inv*k
+        c = np.diag(self.kernel(x, x)) + (1/self.beta)
+        # import IPython
+        # IPython.embed()
+        # mu = np.sum(k.dot(self.C_inv*self.Y), axis=1)
+        mu = k.T.dot(self.C_inv.dot(self.Y))
+        var = c - k.T.dot(self.C_inv.dot(k))
+        var = np.diag(var)
 
         return mu, var

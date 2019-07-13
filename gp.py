@@ -1,8 +1,8 @@
 import numpy as np
 from sklearn.gaussian_process.kernels import RBF
 
-from kernels import Linear
-from GPRegression import GPRegression
+from kernels import Linear, RBF
+from GPregression import GPregression
 
 class GP_Regressor(object):
     def __init__(self, kernel=None):
@@ -32,14 +32,15 @@ class GP_Regressor(object):
 
 
 if __name__ == "__main__":
-    X = np.array([[0.2], [0.4], [0.6]])
-    y = [1, 0.9, 0.8]
+    X = np.array([[0.2], [0.4], [0.6], [0.8], [1.0]])
+    y = np.array([[1], [0.8], [0.6], [0.4], [0.2]])
 
-    # kernel = RBF()
-    kernel = Linear()
+    kernel = RBF()
+    # kernel = Linear()
     # gp = GP_Regressor(kernel=kernel)
-    gp = GPRegression(kernel=kernel, beta=1.)
+    gp = GPregression(kernel=kernel, beta=10)
     gp.fit(X, y)
 
-    mean, std = gp.predict([0.5])
+    given = np.array([[0.5], [0.2]])
+    mean, std = gp.predict(given)
     print("prediction mean:{} std:{}".format(mean, std))
