@@ -8,13 +8,13 @@ class GPregression(object):
         self.beta = beta
 
 
-    def fit(self, x, y):
+    def fit(self, X, Y):
 
-        self.X = x
-        self.Y = y
+        self.X = X
+        self.Y = Y
 
-        self.K = self.kernel(x, x)
-        C = self.K + (1/self.beta)*np.eye(len(x))
+        self.K = self.kernel(X, X)
+        C = self.K + (1 / self.beta) * np.eye(len(x))
 
         self.C_inv = linalg.inv(C)
 
